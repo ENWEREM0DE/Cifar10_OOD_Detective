@@ -3,6 +3,7 @@ from fastapi import FastAPI, File, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 import io
 from PIL import Image
+import uvicorn
 
 app = FastAPI()
 
@@ -22,3 +23,6 @@ async def predictImage(file: UploadFile = File(...)):
     image = Image.open(io.BytesIO(image_data))
     cnn = ImageClassifier()
     return cnn.predictImage(image)
+
+if __name__ == "__main__":
+    uvicorn.run("main:app", host="0.0.0.0", port=8080)
